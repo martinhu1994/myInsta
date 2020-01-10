@@ -16,7 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from insta_app.views import HelloWord
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('insta_app/', include('insta_app.urls')),
+    path('', HelloWord.as_view(), name='default_name'),
 ]
