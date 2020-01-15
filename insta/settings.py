@@ -125,6 +125,6 @@ STATICFILES_DIRS  = [os.path.join(BASE_DIR, 'static')]
 
 LOGIN_REDIRECT_URL = 'posts'
 
-LOGOUT_REDIRECT_URL = 'posts'
+LOGOUT_REDIRECT_URL = 'login'
 
 AUTH_USER_MODEL = 'insta_app.InstaUser'
