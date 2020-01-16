@@ -130,3 +130,5 @@ LOGIN_REDIRECT_URL = 'posts'
 LOGOUT_REDIRECT_URL = 'login'
 
 AUTH_USER_MODEL = 'insta_app.InstaUser'
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
