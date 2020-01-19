@@ -13,14 +13,15 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
+
 from django.urls import path, include
 
-from insta_app.views import HelloWord, PostsView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView, addLike, UserDetailView, toggleFollow, addComment
+from insta_app.views import HelloWord, PostsView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView, addLike, UserDetailView, toggleFollow, addComment, redirection
 
 
 urlpatterns = [
-    path('', HelloWord.as_view(), name='default_name'),
+    path('', redirection, name='redirect_to_login'),
+    path('construction', HelloWord.as_view(), name='default_name'),
     path('posts/', PostsView.as_view(), name='posts'),
     path('post/<int:pk>/', PostDetailView.as_view(), name='post_detail'),
     path('post/new/', PostCreateView.as_view(), name='make_post'),
@@ -29,5 +30,5 @@ urlpatterns = [
     path('like', addLike, name='add_like'),
     path('user/<int:pk>/', UserDetailView.as_view(), name='user_detail'),
     path('togglefollow', toggleFollow, name='follow'),
-    path('comment', addComment, name='comment')
+    path('comment', addComment, name='comment'),
 ]

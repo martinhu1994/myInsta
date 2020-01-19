@@ -3,6 +3,7 @@ from django.views.generic import TemplateView, ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect
 
 from insta_app.models import Post, Like, InstaUser, UserConnection, Comment
 from insta_app.forms import CustomUserCreationForm
@@ -11,9 +12,10 @@ class HelloWord(TemplateView):
     template_name = 'example.html'
 
 
-class PostsView(ListView):
+class PostsView(LoginRequiredMixin, ListView):
     model = Post
     template_name = 'index.html'
+    login_url = 'login'
 
     def get_queryset(self):
         if not self.request.user.is_authenticated:
@@ -37,15 +39,18 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     fields = ['author', 'title', 'image']
     login_url = 'login'
 
-class PostUpdateView(UpdateView):
+
+class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
     template_name = 'post_update.html'
     fields = ['title']
+    login_url = 'login'
 
 
-class PostDeleteView(DeleteView):
+class PostDeleteView(LoginRequiredMixin, DeleteView):
     model = Post
     template_name = 'post_delete.html'
+    login_url = 'login'
     #success_url = reverse_lazy("posts")
 
     def get_success_url(self):
@@ -58,7 +63,7 @@ class SignUp(CreateView):
     success_url = reverse_lazy('login')
 
 
-class UserDetailView(DeleteView):
+class UserDetailView(DetailView):
     model = InstaUser
     template_name = 'user_detail.html'
 
@@ -129,3 +134,11 @@ def addComment(request):
         'post_pk': post_pk,
         'commenter_info': commenter_info
     }
+
+
+def redirection(request):
+    if request.user.is_authenticated:
+        response = redirect('posts')
+    else:
+        response = redirect('login')
+    return response
